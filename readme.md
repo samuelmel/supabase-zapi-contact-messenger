@@ -1,6 +1,5 @@
 # Supabase + Z-API Challenge
 
-Projeto desenvolvido para processo seletivo da b2bflow.
 
 ## Tecnologias
 
@@ -9,9 +8,6 @@ Projeto desenvolvido para processo seletivo da b2bflow.
 - Z-API
 - python-dotenv
 
-## Configuração
-
-Crie um arquivo `.env` baseado em `.env.example`.
 
 ## Banco
 
