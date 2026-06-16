@@ -1,20 +1,22 @@
-import os
+from utils.logger import logger
 import requests
+import os
 
 
-class ZApiService: # classe para lidar com a API do ZAPI
+class ZApiService:
 
     def __init__(self):
+
         self.url = os.getenv("ZAPI_INSTANCE_API")
 
-    def send_message(self, phone: str, name: str): # enviar mensagem para o número de telefone com o nome do contato
+    def send_message(self, phone: str, name: str): # método para enviar uma mensagem usando a API do ZAPI, recebendo o número de telefone e o nome do contato como parâmetros
 
         payload = {
             "phone": phone,
             "message": f"Olá, {name} tudo bem com você?"
         }
 
-        try: # tenta enviar a mensagem e retorna o resultado, caso haja um erro, captura a exceção e retorna o erro em formato de dicionário
+        try:
 
             response = requests.post(
                 self.url,
@@ -24,15 +26,16 @@ class ZApiService: # classe para lidar com a API do ZAPI
 
             response.raise_for_status()
 
-            return {
-                "success": True,
-                "status_code": response.status_code,
-                "response": response.json()
-            }
+            logger.info( # registra uma mensagem de informação no log indicando que a mensagem foi enviada com sucesso para o contato, mostrando o nome e o número de telefone do contato
+                f"Message sent to {name} ({phone})"
+            )
 
-        except requests.RequestException as error:
+            return response
 
-            return {
-                "success": False,
-                "error": str(error)
-            }
+        except Exception as error:
+
+            logger.error(
+                f"Error sending message to {name}: {error}"
+            )
+
+            return None

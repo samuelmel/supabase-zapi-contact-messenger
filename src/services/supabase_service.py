@@ -1,4 +1,5 @@
 from supabase import create_client
+from utils.logger import logger
 import os
 
 
@@ -21,6 +22,11 @@ class SupabaseService:
                 .select("*")
                 .limit(limit)
                 .execute()
+            )
+
+            logger.info # registra uma mensagem de informação no log indicando quantos contatos foram carregados com sucesso
+            (
+                f"{len(response.data)} contacts loaded"
             )
 
             return response.data
