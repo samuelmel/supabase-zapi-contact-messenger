@@ -30,4 +30,3 @@ python src/main.py
 1. Busca contatos no Supabase
 2. Personaliza a mensagem
 3. Envia via Z-API
-4. Registra logs da execução
