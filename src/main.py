@@ -1,10 +1,22 @@
 from dotenv import load_dotenv
-import os
-load_dotenv() # Carrega as variáveis de ambiente do arquivo .env
+
 from services.supabase_service import SupabaseService
+from services.zapi_service import ZApiService
 
-supabase =  SupabaseService() # Cria uma instância do serviço do Supabase
+load_dotenv()
 
-contacts = supabase.get_contacts() # Busca os contatos usando o método do serviço
+supabase = SupabaseService()
+zapi = ZApiService()
 
-print(contacts) # Imprime os contatos obtidos do Supabase
+contacts = supabase.get_contacts() # obtém a lista de contatos do Supabase e armazena na variável contacts
+
+for contact in contacts:
+
+    response = zapi.send_message(
+        contact["phone"],
+        contact["name"]
+    )
+
+    print(
+        f"Mensagem enviada para {contact['name']} - Status: {response.status_code}" # imprime o resultado do envio da mensagem para cada contato, mostrando o nome do contato e o status da resposta
+    )
